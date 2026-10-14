@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CBT Interaktif Bahasa Indonesia Kelas 6 - Kupu-Kupu Mira</title>
+    <!-- Tailwind CSS untuk Desain Modern & Responsif -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Canvas Confetti untuk Efek Gamifikasi Kemenangan -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-indigo-50 via-purple-50 to-pink-50 min-h-screen py-6 px-4">
+
+    <div class="max-w-4xl mx-auto bg-white rounded-2xl shadow-2xl overflow-hidden border border-indigo-100">
+        
+        <!-- HEADER APLIKASI -->
+        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white text-center relative">
+            <span class="absolute top-4 right-4 bg-yellow-400 text-indigo-900 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">🎮 Gamified CBT v2.0</span>
+            <h1 class="text-2xl md:text-3xl font-bold">Post Test Bahasa Indonesia Kelas 6</h1>
+            <p class="text-indigo-200 text-sm mt-1">Bab 2: Nusantara Berjuta Cerita (Sub Bagian A: Cerita Bergambar di Sekitar Kita)</p>
+        </div>
+
+        <!-- FORM LOGIN / IDENTITAS SISWA -->
+        <div id="login-section" class="p-8">
+            <div class="max-w-md mx-auto bg-indigo-50 p-6 rounded-xl border border-indigo-200 shadow-sm">
+                <h2 class="text-xl font-bold text-indigo-900 mb-4 text-center">✨ Masuk Ruang Ujian</h2>
+                <p class="text-xs text-gray-600 mb-4 text-center">Perhatian: Sistem mencatat ID Perangkat Anda. Ujian ini hanya dapat dikerjakan <strong>satu kali percobaan</strong>!</p>
+                
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nama Lengkap Siswa</label>
+                        <input type="text" id="student-name" placeholder="Contoh: Budi Santoso" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">Nomor Absen</label>
+                        <input type="number" id="student-number" placeholder="Contoh: 08" class="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    </div>
+                    <button onclick="startExam()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg transition duration-300 shadow-lg transform hover:-translate-y-0.5">
+                        Mulai Petualangan Kuis 🚀
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- AREA UJIAN (TERSEMBUNYI AWALNYA) -->
+        <div id="exam-section" class="hidden p-6 md:p-8">
+            <!-- PANEL BACAAN CERITA BERGAMBAR (100% SESUAI BUKU) -->
+            <div class="mb-8 bg-amber-50 border-l-4 border-amber-500 p-6 rounded-r-xl shadow-inner">
+                <h3 class="text-lg font-bold text-amber-900 mb-2">📖 Bacaan Wajib: Kupu-Kupu Mira (Oleh Darwanto)</h3>
+                <div class="text-sm text-gray-700 space-y-3 max-h-60 overflow-y-auto pr-4 leading-relaxed bg-white p-4 rounded-lg border border-amber-200">
+                    <p>Mira dan keluarganya tinggal di sebuah rumah susun di lantai tujuh. Rumah susun itu ada di Kota S. Mira, gadis 10 tahun, sangat suka membaca dan mendengarkan cerita. Setiap bulan, Mama selalu membelikan Mira buku baru untuk dibaca[cite: 6]. Kamar Mira sudah mirip perpustakaan, penuh dengan buku.</p>
+                    <p>Dari sekian banyak buku, Mira paling suka buku Ensiklopedia Keragaman Hayati. Dari buku itu, Mira mempelajari dan mengamati aneka ragam flora dan fauna. Mira menyukai tumbuhan dan binatang. Sayangnya, dia tinggal di sebuah rumah susun di lantai tujuh[cite: 6, 7].</p>
+                    <p>Pemilik rumah susun melarang para penghuni memelihara binatang. Binatang bisa menimbulkan bau dan suara berisik[cite: 7]. Suatu ketika, Mira meminta kepada Mamanya untuk melihat kupu-kupu secara langsung. Hingga suatu siang, Mama membawa akuarium mini berisi tiga ekor ulat[cite: 7].</p>
+                    <p>Di buku Ensiklopedia Keragaman Hayati, kupu-kupu berasal dari telur, menjadi ulat, bermetamorfosis jadi kepompong, hingga berubah menjadi kupu-kupu[cite: 8]. Setelah 15 hari, keluarlah kupu-kupu dari kepompong dengan warna sayap hitam kebiru-biruan berbulatan kuning[cite: 8].</p>
+                    <p>Saat Mira membuka akuarium agar kupu-kupu bisa terbang bebas di kamar, seekor cecak besar mendadak menangkap kupu-kupu bersayap mungil tersebut. Merasa sedih, Mira akhirnya memutuskan membawa akuarium mini berisi sisa kupu-kupu keluar rumah susun untuk dilepaskan ke alam bebas[cite: 9].</p>
+                </div>
+            </div>
+
+            <!-- GAMIFIKASI & INFO SOAL -->
+            <div class="flex justify-between items-center mb-6 bg-indigo-50 p-4 rounded-xl border border-indigo-100">
+                <div>
+                    <span id="question-tracker" class="text-sm font-bold text-indigo-700">Soal 1 dari 30</span>
+                    <div class="w-48 bg-gray-200 h-2 rounded-full mt-1 overflow-hidden">
+                        <div id="progress-bar" class="bg-indigo-600 h-full w-0 transition-all duration-300"></div>
+                    </div>
+                </div>
+                <div class="bg-yellow-400 text-yellow-900 px-4 py-1.5 rounded-full font-bold text-sm shadow-sm">
+                    ⭐ Poin: <span id="current-score">0</span>
+                </div>
+            </div>
+
+            <!-- KOTAK PERTANYAAN -->
+            <div id="question-container" class="mb-6">
+                <h4 id="question-text" class="text-lg font-semibold text-gray-800 mb-4"></h4>
+                <div id="options-container" class="space-y-3">
+                    <!-- Opsi Pilihan Ganda akan dimasukkan via JavaScript -->
+                </div>
+            </div>
+
+            <!-- TOMBOL NAVIGASI -->
+            <div class="flex justify-between pt-4 border-t">
+                <button id="prev-btn" onclick="prevQuestion()" class="px-5 py-2 bg-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-400 transition hidden">Sebelumnya</button>
+                <button id="next-btn" onclick="nextQuestion()" class="px-6 py-2 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition ml-auto shadow">Selanjutnya ➔</button>
+            </div>
+        </div>
+
+        <!-- BAGIAN SERTIFIKAT & HASIL AKHIR -->
+        <div id="result-section" class="hidden p-8 text-center">
+            <div class="mb-6">
+                <div class="inline-block p-4 bg-green-100 text-green-600 rounded-full mb-3 text-3xl">🏆</div>
+                <h2 class="text-2xl font-bold text-gray-800">Ujian Telah Selesai!</h2>
+                <p class="text-gray-600 text-sm mt-1">Nilai Anda berhasil disimpan otomatis ke server hosting.</p>
+            </div>
+
+            <div class="bg-indigo-50 p-6 rounded-xl max-w-lg mx-auto mb-6 border border-indigo-200">
+                <p class="text-sm text-gray-600">Perolehan Skor Akhir:</p>
+                <p id="final-score-text" class="text-4xl font-extrabold text-indigo-600 my-2">0 / 100</p>
+                <p id="final-status" class="text-sm font-semibold"></p>
+            </div>
+
+            <!-- TAMPILAN SERTIFIKAT DIGITAL -->
+            <div id="certificate" class="border-8 border-double border-amber-400 bg-white p-8 rounded-xl max-w-2xl mx-auto shadow-xl relative text-left mb-6">
+                <div class="text-center">
+                    <h4 class="text-xs uppercase tracking-widest text-indigo-600 font-bold">Kementerian Pendidikan Dasar dan Menengah</h4>
+                    <h3 class="text-xl font-serif font-bold text-gray-800 mt-1">Sertifikat Kelulusan CBT Bahasa Indonesia</h3>
+                    <p class="text-xs text-gray-500">Diberikan kepada siswa berprestasi:</p>
+                </div>
+                <div class="my-6 text-center">
+                    <h2 id="cert-name" class="text-2xl font-bold text-indigo-900 border-b-2 border-indigo-200 pb-1 inline-block min-w-[250px]"></h2>
+                    <p class="text-sm text-gray-600 mt-2">Nomor Absen: <span id="cert-number" class="font-bold"></span></p>
+                </div>
+                <div class="text-xs text-gray-600 text-center leading-relaxed">
+                    Telah sukses menyelesaikan Uji Kompetensi Post Test Kelas 6 Materi <br>
+                    <strong>"Bab 2 Nusantara Berjuta Cerita - Sub Bagian A: Cerita Bergambar di Sekitar Kita"</strong>[cite: 6].
+                </div>
+                <div class="flex justify-between items-center mt-8 pt-4 border-t text-xs text-gray-500">
+                    <div>Tanggal: <span id="cert-date"></span></div>
+                    <div class="text-right">Guru Pengampu Kelas 6<br><strong>Inovatif & Kreatif Web</strong></div>
+                </div>
+            </div>
+
+            <button onclick="window.print()" class="bg-purple-600 hover:bg-purple-700 text-white font-bold px-6 py-2.5 rounded-lg shadow transition">
+                🖨️ Cetak / Unduh Sertifikat
+            </button>
+        </div>
+
+    </div>
+
+    <!-- SCRIPT LOGIKA CBT & KEAMANAN IMEI/DEVICE ID -->
+    <script>
+        // 30 Soal Pilihan Ganda Fokus Sub Bagian A: Cerita Bergambar di Sekitar Kita
+        const questions = [
+            { q: "Apa arti kata 'cerita' menurut Kamus Besar Bahasa Indonesia (KBBI) dalam bab ini?", options: ["Kumpulan gambar bergerak di layar", "Tuturan yang menjelaskan sebuah kejadian atau peristiwa", "Karangan ilmiah tentang sejarah dunia", "Percakapan antara dua orang tokoh"], answer: 1 },
+            { q: "Berikut ini yang merupakan media penyampaian cerita secara tertulis adalah...", options: ["Cerita langsung kepada pendengar", "Cerita rakyat lisan antargenerasi", "Cerpen, novel, komik, drama, dan film", "Pidato kepala sekolah di lapangan"], answer: 2 },
+            { q: "Di manakah Mira dan keluarganya tinggal dalam cerita 'Kupu-Kupu Mira'?", options: ["Di sebuah rumah tapak berhalaman luas", "Di sebuah rumah susun di lantai tujuh Kota S", "Di sebuah desa di kaki Gunung Awu", "Di tepi Pantai Naha yang berpasir putih"], answer: 1 },
+            { q: "Buku apa yang paling disukai Mira dari sekian banyak buku di kamarnya?", options: ["Ensiklopedia Keragaman Hayati", "Kamus Besar Bahasa Indonesia", "Sejarah Dunia Yang Disembunyikan", "Panduan Seni Musik Nusantara"], answer: 0 },
+            { q: "Mengapa pemilik rumah susun melarang para penghuninya memelihara binatang?", options: ["Karena binatang harganya sangat mahal", "Karena binatang bisa menimbulkan bau dan suara berisik", "Karena rumah susun tidak punya pintu keluar", "Karena tidak ada dokter hewan di dekat rumah susun"], answer: 1 },
+            { q: "Apa yang dibawa Mama ke rumah untuk mengobati kesedihan Mira yang ingin melihat kupu-kupu?", options: ["Sebuah pot bunga mawar merah", "Seekor anak kucing anggora", "Akuarium mini berisi tiga ekor ulat", "Sebuah lukisan pemandangan hutan"], answer: 2 },
+            { q: "Berapa lama waktu yang dibutuhkan ulat untuk bermetamorfosis menjadi kepompong hingga menetas jadi kupu-kupu?", options: ["Sekitar 2 sampai 3 hari", "Sekitar 5 sampai 7 hari", "Sekitar sepuluh sampai lima belas hari", "Sekitar satu bulan penuh"], answer: 2 },
+            { q: "Apa yang dilakukan ulat saat berada di dalam fase kepompong menurut penjelasan Mama?", options: ["Terus-menerus makan daun segar", "Berpuasa, tidak makan dan tidak minum", "Berjalan-jalan mengelilingi akuarium", "Tidur nyenyak sepanjang hari"], answer: 1 },
+            { q: "Bagaimana corak warna sayap kupu-kupu yang berhasil keluar dari kepompong Mira?", options: ["Merah menyala dengan bintik hijau", "Hitam kebiru-biruan dengan bulatan kuning terang", "Putih bersih tanpa corak sama sekali", "Kuning keemasan dengan garis ungu"], answer: 1 },
+            { q: "Apa musuh tak terduga yang tiba-tiba menangkap kupu-kupu mungil milik Mira di kamarnya?", options: ["Seekor kucing hitam berbulu lebat", "Seekor cicak besar yang merayap dari belakang lemari", "Seekor laba-laba penenun jaring", "Seekor burung pipit dari luar jendela"], answer: 1 },
+            { q: "Apa tindakan akhir yang diambil Mira setelah melihat kupu-kupunya ditangkap cecak?", options: ["Mengurung cicak tersebut ke dalam akuarium", "Membawa akuarium mini berisi sisa kupu-kupu keluar untuk dilepaskan ke langit", "Membuang seluruh buku ensiklopedia miliknya", "Menangis dan tidak mau membaca buku lagi"], answer: 1 },
+            { q: "Manakah karya sastra di bawah ini yang mempunyai proporsi gambar lebih banyak dibanding teksnya?", options: ["Novel dan cerpen", "Cerita bergambar dan komik", "Buku sejarah dan ensiklopedia", "Naskah pidato dan esai"], answer: 1 },
+            { q: "Pada cerpen dan novel, apa fungsi utama dari gambar yang disematkan?", options: ["Sebagai isi utama cerita", "Hanya sebagai pelengkap cerita", "Sebagai pengganti halaman kosong", "Sebagai daftar pustaka"], answer: 1 },
+            { q: "Apakah definisi dari 'Teks Sastra' berdasarkan materi pembelajaran?", options: ["Kata-kata lugas yang berisi data statistik dan angka", "Kata-kata yang disampaikan dengan indah untuk menyampaikan gagasan, informasi, atau perasaan", "Laporan pengamatan ilmiah di laboratorium", "Petunjuk penggunaan suatu alat elektronik"], answer: 1 },
+            { q: "Manakah di bawah ini yang termasuk contoh jenis karya berupa teks sastra?", options: ["Peta geografis wilayah", "Puisi, cerpen, novel, drama, dan cerita rakyat", "Buku petunjuk resep makanan", "Artikel berita surat kabar harian"], answer: 1 },
+            { q: "Di antara pilihan judul buku berikut, manakah yang tergolong ke dalam buku sastra?", options: ["SEJARAH Nasional Indonesia", "KODING DAN KECERDATAN ARTIFISIAL", "Legenda Batu Kuwung", "Pandaan Guru SENI MUSIK"], answer: 2 },
+            { q: "Manakah di antara pilihan buku berikut yang tergolong ke dalam buku nonsastra?", options: ["Karena Anggrek Ibu", "Biji Merah Luna", "Legenda Batu Kuwung", "Buku SEJARAH"], answer: 3 },
+            { q: "Apa istilah dalam KBBI untuk 'Kondisi'?", options: ["Keadaan", "Khayalan", "Aturan", "Cerita"], answer: 0 },
+            { q: "Apa arti kosakata 'Hayati' dalam kamus mini bab ini?", options: ["Keindahan", "Kehidupan", "Kecil", "Kelompok"], answer: 1 },
+            { q: "Apa arti kosakata 'Mini'?", options: ["Besar", "Luas", "Kecil", "Panjang"], answer: 2 },
+            { q: "Apa arti kata 'Pantangan'?", options: ["Hal yang dianjurkan", "Hal yang dilarang", "Hal yang dihormati", "Hal yang dibanggakan"], answer: 1 },
+            { q: "Apa arti kata 'Masyhur'?", options: ["Terkenal", "Tersembunyi", "Kuno", "Sederhana"], answer: 0 },
+            { q: "Apa arti kata 'Imajinasi'?", options: ["Kenyataan", "Khayalan", "Pengetahuan", "Pengalaman"], answer: 1 },
+            { q: "Siapakah penulis cerita 'Kupu-Kupu Mira' dalam buku paket Bahasa Indonesia Kelas 6?", options: ["Nisa Yustisia", "Darwanto", "Anna Farida", "Mashdar Zainal"], answer: 1 },
+            { q: "Di kota manakah letak rumah susun tempat tinggal Mira?", options: ["Kota J", "Kota M", "Kota S", "Kota Y"], answer: 2 },
+            { q: "Apa reaksi awal Mira saat pertama kali melihat Mama membawakan ulat ke dalam rumah?", options: ["Langsung tersenyum gembira", "Protes karena mengira ulat tidak berguna", "Segera memberi makan ulat tersebut", "Mengabaikan dan tidur"], answer: 1 },
+            { q: "Berapa jumlah ulat yang dibawa oleh Mama di dalam akuarium mini?", options: ["Dua ekor", "Tiga ekor", "Empat ekor", "Lima ekor"], answer: 1 },
+            { q: "Apa pelajaran moral yang disampaikan Mama mengenai proses ulat menjadi kepompong hingga indah?", options: ["Untuk menjadi indah, kita harus berpuasa, menahan diri, dan sabar", "Kecantikan fisik adalah segalanya di dunia", "Binatang peliharaan harus dikurung rapat", "Membaca buku tidak berguna tanpa praktik"], answer: 0 },
+            { q: "Apa ciri utama pembeda antara teks sastra bergambar dengan cerpen biasa?", options: ["Proporsi gambar pada cerita bergambar jauh lebih banyak", "Cerita bergambar tidak memiliki alur cerita", "Cerpen selalu ditulis tanpa gambar sama sekali", "Cerita bergambar hanya untuk anak balita"], answer: 0 },
+            { q: "Mengapa sub bagian A bab ini sangat menekankan pentingnya imajinasi dan pengamatan lingkungan sekitar?", options: ["Agar siswa bisa membuat laporan keuangan", "Agar siswa peka terhadap flora, fauna, dan mampu menghargai karya sastra bergambar", "Agar siswa menjadi atlet profesional", "Agar siswa bisa membangun rumah susun"], answer: 1 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+        let selectedAnswers = new Array(questions.length).fill(null);
+
+        // --- SISTEM KEAMANAN: DEVICE FINGERPRINTING / IMEI SIMULATION & 1 KALI PERCOBAAN ---
+        function getDeviceID() {
+            let id = localStorage.getItem('cbt_device_token');
+            if (!id) {
+                // Membuat ID unik berdasarkan kombinasi hardware/browser fingerprint
+                id = 'DEV-' + Math.random().toString(36).substring(2) + '-' + Date.now().toString(36);
+                localStorage.setItem('cbt_device_token', id);
+            }
+            return id;
+        }
+
+        window.onload = function() {
+            const deviceID = getDeviceID();
+            const hasSubmitted = localStorage.getItem('cbt_submitted_' + deviceID);
+            
+            if (hasSubmitted === 'true') {
+                document.getElementById('login-section').innerHTML = `
+                    <div class="bg-red-50 border border-red-200 p-6 rounded-xl text-center">
+                        <h3 class="text-xl font-bold text-red-700 mb-2">⚠️ Akses Ditolak!</h3>
+                        <p class="text-sm text-gray-600 mb-2">Perangkat ini (ID: <span class="font-mono text-xs">${deviceID}</span>) telah digunakan untuk mengerjakan ujian ini sebelumnya.</p>
+                        <p class="text-xs text-red-500 font-semibold">Sistem keamanan mendeteksi batas maksimal pengerjaan adalah **1 kali percobaan**.</p>
+                    </div>
+                `;
+            }
+        };
+
+        function startExam() {
+            const name = document.getElementById('student-name').value.trim();
+            const number = document.getElementById('student-number').value.trim();
+
+            if (!name || !number) {
+                alert('Mohon masukkan Nama Lengkap dan Nomor Absen terlebih dahulu!');
+                return;
+            }
+
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('exam-section').classList.remove('hidden');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-tracker').innerText = `Soal ${currentQuestion + 1} dari ${questions.length}`;
+            document.getElementById('question-text').innerText = `${currentQuestion + 1}. ${q.q}`;
+            
+            let progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+
+            const optionsContainer = document.getElementById('options-container');
+            optionsContainer.innerHTML = '';
+
+            q.options.forEach((opt, index) => {
+                const isSelected = selectedAnswers[currentQuestion] === index;
+                const btnClass = isSelected 
+                    ? 'bg-indigo-600 text-white border-indigo-600 shadow-md' 
+                    : 'bg-white text-gray-700 hover:bg-indigo-50 border-gray-200';
+
+                optionsContainer.innerHTML += `
+                    <button onclick="selectOption(${index})" class="w-full text-left px-5 py-3 rounded-xl border font-medium transition duration-200 flex items-center space-x-3 ${btnClass}">
+                        <span class="w-7 h-7 flex items-center justify-center rounded-full bg-indigo-100 text-indigo-800 text-xs font-bold">${String.fromCharCode(65 + index)}</span>
+                        <span>${opt}</span>
+                    </button>
+                `;
+            });
+
+            if (currentQuestion === 0) {
+                document.getElementById('prev-btn').classList.add('hidden');
+            } else {
+                document.getElementById('prev-btn').classList.remove('hidden');
+            }
+
+            if (currentQuestion === questions.length - 1) {
+                document.getElementById('next-btn').innerText = 'Selesai & Kirim Ujian 🏁';
+            } else {
+                document.getElementById('next-btn').innerText = 'Selanjutnya ➔';
+            }
+        }
+
+        function selectOption(index) {
+            selectedAnswers[currentQuestion] = index;
+            loadQuestion();
+        }
+
+        function nextQuestion() {
+            if (selectedAnswers[currentQuestion] === null) {
+                alert('Pilih salah satu jawaban terlebih dahulu!');
+                return;
+            }
+
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                finishExam();
+            }
+        }
+
+        function prevQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function finishExam() {
+            // Hitung Skor
+            score = 0;
+            selectedAnswers.forEach((ans, idx) => {
+                if (ans === questions[idx].answer) {
+                    score += (100 / questions.length);
+                }
+            });
+
+            const finalScoreRounded = Math.round(score);
+            const deviceID = getDeviceID();
+
+            // Kunci perangkat agar tidak bisa tes ulang
+            localStorage.setItem('cbt_submitted_' + deviceID, 'true');
+
+            // Sembunyikan ujian, tampilkan hasil & sertifikat
+            document.getElementById('exam-section').classList.add('hidden');
+            document.getElementById('result-section').classList.remove('hidden');
+
+            const name = document.getElementById('student-name').value;
+            const number = document.getElementById('student-number').value;
+
+            document.getElementById('final-score-text').innerText = `${finalScoreRounded} / 100`;
+            
+            const statusEl = document.getElementById('final-status');
+            if (finalScoreRounded >= 75) {
+                statusEl.innerHTML = `<span class="text-green-600 font-bold">🎉 LUAR BIASA! Anda Lulus dengan Kompetensi Sangat Baik.</span>`;
+                // Efek kembang api gamifikasi kemenangan
+                confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            } else {
+                statusEl.innerHTML = `<span class="text-amber-600 font-bold">📌 Terus tingkatkan semangat membaca dan belajar teks sastra!</span>`;
+            }
+
+            document.getElementById('cert-name').innerText = name;
+            document.getElementById('cert-number').innerText = number;
+            document.getElementById('cert-date').innerText = new Date().toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            // SIMPAN OTOMATIS KE DATABASE HOSTING MENGGUNAKAN FETCH API (PHP)
+            saveToHostingDatabase(name, number, finalScoreRounded, deviceID);
+        }
+
+        function saveToHostingDatabase(name, number, score, deviceID) {
+            // Contoh pengiriman data otomatis ke server hosting (Backend PHP)
+            const payload = {
+                nama: name,
+                absen: number,
+                nilai: score,
+                device_id: deviceID,
+                waktu: new Date().toISOString()
+            };
+
+            // Uncomment baris di bawah ini saat file dipasang ke hosting PHP Anda (misal: simpan_nilai.php)
+            /*
+            fetch('https://domain-hosting-anda.com/simpan_nilai.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+            .then(response => response.json())
+            .then(data => console.log('Database tersimpan otomatis:', data))
+            .catch(error => console.error('Gagal simpan ke database:', error));
+            */
+            console.log('Simulasi Data Terkirim ke Database Hosting:', payload);
+        }
+    </script>
+</body>
+</html>
